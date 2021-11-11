@@ -57,5 +57,5 @@ app.post('/agregar',logica.addPokemon)
 
 // Start server
 app.listen(process.env.PORT || 3002, () => {
-  console.log(`Server listening`)
+  console.log(`Server listening in ${process.env.PORT}`)
 })
