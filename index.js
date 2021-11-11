@@ -23,10 +23,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-app
-  .route('/users')
-  // GET endpoint
-  .get(logica.getUsers);
+app.get('/users',logica.getUsers);
 
 //obtener los pokemons del usuario en sesión
 app.get('/pokes',logica.getPokemons);

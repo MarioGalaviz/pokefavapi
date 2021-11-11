@@ -1,7 +1,7 @@
 CREATE TABLE "users" (
   "id" bigserial PRIMARY KEY,
   "username" varchar(12) UNIQUE,
-  "passwordHash" varchar(255),
+  "password_hash" varchar(255),
   "type" varchar(50)
 );
 
