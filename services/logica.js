@@ -145,7 +145,10 @@ const signIn = (req, res) => {
 }
 
 const check = (req,res) => {
-    
+    console.log(req.headers);
+    console.log(req.cookies);
+    console.log(req.session);
+    console.log(req.rawHeaders);
     if(typeof req.session.passport !== 'undefined') {
         pool.query(
         'SELECT username from users where id=$1',
