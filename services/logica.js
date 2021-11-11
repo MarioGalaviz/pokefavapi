@@ -11,7 +11,8 @@ const getUsers = (request, response) => {
   }
 
 const getPokemons = (req,res) => {
-    pool.query(
+    if(typeof req.session.passport !== 'undefined') {
+        pool.query(
         'SELECT usersxpokes.id_user ,usersxpokes.id_pokedex, usersxpokes.place, pokemons.name, usersxpokes.justification from usersxpokes left join pokemons on usersxpokes.id_pokedex = pokemons.id_pokedex where id_user = $1',
         [req.session.passport.user],
         (error, results) => {
@@ -21,6 +22,10 @@ const getPokemons = (req,res) => {
             res.status(200).json(results.rows)
         }
     )
+    } else {
+        res.status(403);
+    }
+    
 }
 
 
@@ -61,20 +66,26 @@ function shuffle(array) {
   }
 
 const getOtherUsers = (req,res) => {
-    pool.query(
-        'SELECT users.id, users.username, poke1.id_pokedex as id1, poke1.name as name1, poke1.justification as just1, poke2.id_pokedex as id2, poke2.name as name2, poke2.justification as just2, poke3.id_pokedex as id3, poke3.name as name3, poke3.justification as just3 \
-        from users left join (select id_user, pokemons.id_pokedex, name, justification  from usersxpokes left join pokemons on usersxpokes.id_pokedex = pokemons.id_pokedex where place = 1) poke1 on users.id = poke1.id_user \
-        left join (select id_user, pokemons.id_pokedex, name, justification from usersxpokes left join pokemons on usersxpokes.id_pokedex = pokemons.id_pokedex where place = 2) poke2 on users.id = poke2.id_user \
-        left join (select id_user, pokemons.id_pokedex, name, justification  from usersxpokes left join pokemons on usersxpokes.id_pokedex = pokemons.id_pokedex where place = 3) poke3 on users.id = poke3.id_user \
-        where users.id <> $1',
-        [req.session.passport.user],
-        (error, results) => {
-            if (error) {
-                throw error
+    if(typeof req.session.passport !== 'undefined') {
+        pool.query(
+            'SELECT users.id, users.username, poke1.id_pokedex as id1, poke1.name as name1, poke1.justification as just1, poke2.id_pokedex as id2, poke2.name as name2, poke2.justification as just2, poke3.id_pokedex as id3, poke3.name as name3, poke3.justification as just3 \
+            from users left join (select id_user, pokemons.id_pokedex, name, justification  from usersxpokes left join pokemons on usersxpokes.id_pokedex = pokemons.id_pokedex where place = 1) poke1 on users.id = poke1.id_user \
+            left join (select id_user, pokemons.id_pokedex, name, justification from usersxpokes left join pokemons on usersxpokes.id_pokedex = pokemons.id_pokedex where place = 2) poke2 on users.id = poke2.id_user \
+            left join (select id_user, pokemons.id_pokedex, name, justification  from usersxpokes left join pokemons on usersxpokes.id_pokedex = pokemons.id_pokedex where place = 3) poke3 on users.id = poke3.id_user \
+            where users.id <> $1',
+            [req.session.passport.user],
+            (error, results) => {
+                if (error) {
+                    throw error
+                }
+                res.status(200).json(shuffle(results.rows));
             }
-            res.status(200).json(shuffle(results.rows));
-        }
-    );
+        );
+    } else {
+        res.status(403);
+    }
+    
+    
     
 }
 
