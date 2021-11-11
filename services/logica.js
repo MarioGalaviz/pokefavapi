@@ -23,7 +23,7 @@ const getPokemons = (req,res) => {
         }
     )
     } else {
-        res.status(403);
+        res.status(403).json([{message: 'nada'}]);
     }
     
 }
@@ -82,7 +82,7 @@ const getOtherUsers = (req,res) => {
             }
         );
     } else {
-        res.status(403);
+        res.status(403).json([{message: 'nada'}]);
     }
     
     
@@ -157,7 +157,7 @@ const check = (req,res) => {
             res.status(200).json(results.rows)
         });
     } else {
-        res.status(403);
+        res.status(403).json([{message: 'nada'}]);
     }
     
     
