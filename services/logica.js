@@ -134,7 +134,9 @@ const signIn = (req, res) => {
 }
 
 const check = (req,res) => {
-    pool.query(
+    
+    if(typeof req.session.passport !== 'undefined') {
+        pool.query(
         'SELECT username from users where id=$1',
         [req.session.passport.user],
         (error,results) => {
@@ -142,8 +144,11 @@ const check = (req,res) => {
                 throw error
             }
             res.status(200).json(results.rows)
-        }
-    )
+        });
+    } else {
+        res.status(403);
+    }
+    
     
 }
 
