@@ -134,21 +134,17 @@ const signIn = (req, res) => {
 }
 
 const check = (req,res) => {
-    if (req.session.passport.user) {
-        pool.query(
-            'SELECT username from users where id=$1',
-            [req.session.passport.user],
-            (error,results) => {
-                if (error) {
-                    throw error
-                }
-                res.status(200).json(results.rows)
+    pool.query(
+        'SELECT username from users where id=$1',
+        [req.session.passport.user],
+        (error,results) => {
+            if (error) {
+                throw error
             }
-        )
-        
-    } else {
-        res.status(403)
-    }
+            res.status(200).json(results.rows)
+        }
+    )
+    
 }
 
 const addPokemon = (req, res) => {
