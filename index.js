@@ -72,6 +72,9 @@ app.get('/check', logica.check)
 //parametros necesarios: nombre, id, place
 app.post('/agregar',logica.addPokemon)
 
+//prueba origin
+app.get('/pruebaorigin',logica.origin)
+
 // Start server
 app.listen(process.env.PORT || 3002, () => {
   console.log(`Server listening in ${process.env.PORT}`)

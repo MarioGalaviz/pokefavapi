@@ -205,6 +205,11 @@ const addPokemon = (req, res) => {
     
 }
 
+const origin = (req, res) => {
+    res.status(200).json(req.headers.origin);
+    
+}
+
 module.exports = {
     getUsers,
     getPokemons,
@@ -212,5 +217,6 @@ module.exports = {
     signIn,
     addPokemon,
     getPokemonsOther,
-    check
+    check,
+    origin
 }
