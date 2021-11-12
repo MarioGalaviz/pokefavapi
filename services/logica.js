@@ -206,7 +206,7 @@ const addPokemon = (req, res) => {
 }
 
 const origin = (req, res) => {
-    res.status(200).json(req.headers.origin);
+    res.status(200).json(req.headers);
     
 }
 
