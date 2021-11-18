@@ -21,19 +21,19 @@ app.use(cors(
 ))
 app.use(session({ 
   secret: 'juan the keyboard cat',
-  resave: true,
+  resave: false,
   cookie: { maxAge: 1000*60*60*24 },
-  saveUninitialized: true }));
+  saveUninitialized: false }));
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", 'http://localhost:3000');
+  res.header("Access-Control-Allow-Origin", req.headers.origin);
   res.header("Access-Control-Allow-Credentials", true);
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
   res.header(
   "Access-Control-Allow-Headers",
-  'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json'
+  'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'
   );
   next();
   });
