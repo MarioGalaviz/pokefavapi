@@ -22,7 +22,11 @@ app.use(cors(
 app.use(session({ 
   secret: 'juan the keyboard cat',
   resave: false,
-  cookie: { maxAge: 1000*60*60*24 },
+  cookie: { 
+    maxAge: 1000*60*60*24,
+    sameSite: 'none',
+    secure: true
+  },
   saveUninitialized: false }));
 app.use(cookieParser());
 app.use(passport.initialize());
